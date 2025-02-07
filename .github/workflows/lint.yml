@@ -1,20 +1,16 @@
-name: ESLint check
+name: reviewdog
 
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+on: [pull_request]
 
 jobs:
-  build:
+  eslint:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
-      - uses: reviewdog/action-eslint@v1.33.0
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          node_version: 22
-      - run: npm ci
+          bun-version: latest
+      - run: bun install
+      - run: bun run lint
 
